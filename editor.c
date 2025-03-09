@@ -1,15 +1,8 @@
-#include <conio.h>
-#include <stdio.h>
-
-int main() {
-    char c;
-    printf("Press keys (press 'q' to quit):\n");
-
-    while (1) {
-        c = _getch();  // Reads a key without echoing it
-        if (c == 'q') break;
-        printf("You pressed: %c\n", c);
+void editorSearch(char *query) {
+    char *match = strstr(E.content, query);
+    if (match) {
+        int pos = match - E.content;
+        printf("Found at position: %d\n", pos);
     }
-
-    return 0;
 }
+
