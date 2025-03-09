@@ -1,14 +1,10 @@
-#include <conio.h>
-#include <stdio.h>
-
 int main() {
-    char c;
-    printf("Press keys (press 'q' to quit):\n");
+    enableRawMode();
 
-    while (1) {
-        c = _getch();  // Reads a key without echoing it
+    char c;
+    while (read(STDIN_FILENO, &c, 1) == 1) {
         if (c == 'q') break;
-        printf("You pressed: %c\n", c);
+        printf("%c\r\n", c);
     }
 
     return 0;
