@@ -1,15 +1,21 @@
-#include <conio.h>
-#include <stdio.h>
+typedef struct {
+    int size;
+    char *content;
+} EditorBuffer;
 
-int main() {
-    char c;
-    printf("Press keys (press 'q' to quit):\n");
+EditorBuffer E;
 
-    while (1) {
-        c = _getch();  // Reads a key without echoing it
-        if (c == 'q') break;
-        printf("You pressed: %c\n", c);
-    }
+void editorOpen(char *filename) {
+    FILE *fp = fopen(filename, "r");
+    if (!fp) die("fopen");
 
-    return 0;
+    fseek(fp, 0, SEEK_END);
+    E.size = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+
+    E.content = malloc(E.size + 1);
+    fread(E.content, 1, E.size, fp);
+    fclose(fp);
+
+    write(STDOUT_FILENO, E.content, E.size);
 }
